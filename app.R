@@ -7,7 +7,7 @@ library(koRpus)
 
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
-txt <- as.character("Cunningham (2020): We extracted an orthographic transcript that included no chat codes. We excluded unintelligible words, but all other verbal productions were included, such as whole-wordrepetitions, filler words, and so forth.")
+txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript that included no chat codes. We excluded unintelligible words, but all other verbal productions were included, such as whole-wordrepetitions, filler words, and so forth."')
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -20,7 +20,7 @@ ui <- fluidPage(
         sidebarPanel(
             textAreaInput("transcr",
                         "Paste Transcription Here:",
-                        value = "Cinderella was a pleasant young girl. Her father married a nasty woman who had two nasty daughters and they treated her like dirt and the prince of the area was planning a ball. She was uh sisters, they ain’t real. They ain’t married really but they’re. Anyway, she uh they wanted the the ball and the prince yeah they wanna go see him",
+                        value = "Young boy is practicing playing soccer. Kicking the ball up and keeping it in the air. He miskicks. and and it fall goes and breaks the window of his house. of the living room actually. nd bounces into the living room knocking a lamp over where his father is sitting. the father picks up the soccer ball. Looks out the window. And calls for the little boy &t to come and explain. [AphasiaBank]",
                        width = '100%',
                        height = '400px'),
             sliderInput("mattr_w", "MATTR WINDOW:", value = 5, min = 5, max = 50),
@@ -30,7 +30,7 @@ ui <- fluidPage(
         mainPanel(
            tableOutput("summaryStats"),
            textOutput("description")
-        )
+        ) 
     )
 )
 
