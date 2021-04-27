@@ -9,6 +9,7 @@ library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
+library(waiter)
 
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
@@ -18,6 +19,7 @@ txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+    use_waiter(),
 
     # Application title
     titlePanel("Word Information Measure and Moving Average Type Token Ratio"),
@@ -35,16 +37,21 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
+            div(id = "plot",
            tableOutput("summaryStats"),
            textOutput("description")
+            )
         ) 
     )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
+    
+    w <- Waiter$new(id = "plot")
 
     if(is.null(txt)){
+    w$show()
     loading_function()
     }
     
