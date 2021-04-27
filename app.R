@@ -1,6 +1,7 @@
 ### Cunningham & HAley (2020)
 
 library(shiny)
+library(waiter)
 
 txt <- NULL
 
@@ -9,7 +10,6 @@ library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
-library(waiter)
 
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
@@ -20,7 +20,7 @@ txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     use_waiter(),
-
+    waiter_show_on_load(html = spin_fading_circles()),
     # Application title
     titlePanel("Word Information Measure and Moving Average Type Token Ratio"),
 
@@ -37,10 +37,8 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-            div(id = "plot",
            tableOutput("summaryStats"),
            textOutput("description")
-            )
         ) 
     )
 )
@@ -48,17 +46,14 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     
-    w <- Waiter$new(id = "plot")
-
     if(is.null(txt)){
-    w$show()
     loading_function()
     }
     
     output$description <- renderText({txt})
         
     output$summaryStats <- renderTable({
-        
+        req(input$transcr)
         # save input as a variable
         transcript <- as.character(input$transcr)
         # WIM
@@ -73,7 +68,7 @@ server <- function(input, output) {
            MATTR = m,
            Word_Information_Measure = ld
         )
-
+        waiter_hide()
         return(df)
     })
 }
