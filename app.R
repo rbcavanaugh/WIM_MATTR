@@ -20,7 +20,7 @@ txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     use_waiter(),
-    waiter_show_on_load(html = spin_fading_circles()),
+    waiter_show_on_load(html = spin_dots(), color = "white"),
     # Application title
     titlePanel("Word Information Measure and Moving Average Type Token Ratio"),
 
