@@ -1,6 +1,11 @@
 ### Cunningham & HAley (2020)
 
 library(shiny)
+
+txt <- NULL
+
+loading_function <- function(){
+library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
@@ -8,6 +13,8 @@ library(koRpus)
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
 txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript that included no chat codes. We excluded unintelligible words, but all other verbal productions were included, such as whole-wordrepetitions, filler words, and so forth."')
+
+}
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -37,6 +44,9 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
+    if(is.null(txt)){
+    loading_function()
+    }
     
     output$description <- renderText({txt})
         
@@ -54,7 +64,7 @@ server <- function(input, output) {
         
         df <- tibble(
            MATTR = m,
-           LexicalDiversity = ld
+           Word_Information_Measure = ld
         )
 
         return(df)
