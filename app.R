@@ -2,6 +2,7 @@
 
 library(shiny)
 library(waiter)
+library(shiny.pwa)
 
 txt <- NULL
 
@@ -10,7 +11,7 @@ library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
-library(shiny.pwa)
+
 
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
