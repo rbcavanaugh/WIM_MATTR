@@ -10,6 +10,7 @@ library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
+library(shiny.pwa)
 
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
@@ -26,7 +27,7 @@ ui <- fluidPage(
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
-        sidebarPanel(
+        sidebarPanel(pwa("https://robcavanaugh.app/shiny/lexical-diversity/", output = "www", title = "lexdiv"),
             textAreaInput("transcr",
                         "Paste Transcription Here:",
                         value = "Young boy is practicing playing soccer. Kicking the ball up and keeping it in the air. He miskicks. and and it fall goes and breaks the window of his house. of the living room actually. nd bounces into the living room knocking a lamp over where his father is sitting. the father picks up the soccer ball. Looks out the window. And calls for the little boy &t to come and explain. [AphasiaBank]",
