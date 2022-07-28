@@ -1,31 +1,17 @@
-### Cunningham & HAley (2020)
-
-library(shiny)
-library(waiter)
-library(shiny.pwa)
-
-txt <- NULL
-
-loading_function <- function(){
+### Cunningham & Haley (2020)
 library(shiny)
 library(tibble)
 library(qdap) 
 library(koRpus)
 
-
 set.kRp.env(lang="en")
 koRpus.lang.en::lang.support.en()
 txt <- as.character('Cunningham (2020): "We extracted an orthographic transcript that included no chat codes. We excluded unintelligible words, but all other verbal productions were included, such as whole-wordrepetitions, filler words, and so forth."')
 
-}
-
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-    use_waiter(),
-    waiter_show_on_load(html = spin_dots(), color = "white"),
     # Application title
     titlePanel("Word Information Measure and Moving Average Type Token Ratio"),
-
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
         sidebarPanel(pwa("https://robcavanaugh.app/shiny/lexical-diversity/", output = "www", title = "lexdiv"),
@@ -36,7 +22,6 @@ ui <- fluidPage(
                        height = '400px'),
             sliderInput("mattr_w", "MATTR WINDOW:", value = 5, min = 5, max = 50),
         ),
-
         # Show a plot of the generated distribution
         mainPanel(
            tableOutput("summaryStats"),
@@ -47,11 +32,7 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-    
-    if(is.null(txt)){
-    loading_function()
-    }
-    
+
     output$description <- renderText({txt})
         
     output$summaryStats <- renderTable({
@@ -65,22 +46,14 @@ server <- function(input, output) {
         m <- MATTR(tokenized.obj, window = input$mattr_w) #this is the analysis window, currently set to 5 words
         m <- m@MATTR
         m <-m$MATTR
-        
+        # output to table
         df <- tibble(
            MATTR = m,
            Word_Information_Measure = ld
         )
-        waiter_hide()
         return(df)
     })
 }
-
 # Run the application 
 shinyApp(ui = ui, server = server)
-
-
-# deployment: 
-
-# library(rsconnect)
-# rsconnect::deployApp("/Users/robcavanaugh/Dropbox/discourse_analysis")
 
